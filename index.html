@@ -1,0 +1,132 @@
+<html>
+  <!-- Maybe use bootstrap to make the formatting easier? 3 separate columns -->
+  <head>
+    <title>Cookie Clicker</title>
+    <script src="cookie.js"></script>
+    <link rel="stylesheet" href="bootstrap-grid.css">
+    <!-- Bootstrap Grid v5.1.0 (https://getbootstrap.com/)
+     Copyright 2011-2021 The Bootstrap Authors
+     Copyright 2011-2021 Twitter, Inc.
+     Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE) -->
+    <style>
+      body {
+        background-color: #774400;
+        font-family: sans-serif;
+        font-size: 18px;
+        color: black;
+        margin-top: 0px;
+        margin-bottom: 0px;
+      }
+      #cook {
+        text-align: center;
+      }
+      #cookie {
+        animation: rotateC 100s infinite;
+        animation-timing-function: linear;
+      }
+      #cookie:active {
+        margin: 10px;
+        width: 321px;
+      }
+      @keyframes rotateC { /* Animation made with help from https://flaviocopes.com/rotate-image/ */
+        from {
+          transform: rotate(0deg);
+        }
+        to {
+          transform: rotate(359.99deg);
+        }
+      }
+      .buyB { /* active version? */
+        border: 5px solid black;
+        margin: 10px 0 10px 0;
+      }
+      #buildings {
+        background-color: pink;
+      }
+      #buildings .buyB {
+        background-color: #FF9999;
+      }
+      #buildings .buyB:hover {
+        background-color: #BB5555;
+      }
+      #buildings .buyB:active {
+        background-color: #882222;
+      }
+      #upgrades {
+        background-color: green;
+      }
+      #upgrades .buyB {
+        background-color: #99FF99;
+      }
+      #upgrades .buyB:hover {
+        background-color: #55BB55;
+      }
+      #upgrades .buyB:active {
+        background-color: #228822;
+      }
+      #buildings,#upgrades {
+        overflow-y: scroll;
+        height: 625px;
+      }
+      #cosmCook {
+        font-weight: bolder;
+      }
+      #cookieUpgrade {
+        background-color: white;
+      }
+      #cookieUpgrade:hover {
+        background-color: #ddbb99;
+      }
+      #cookieUpgrade:active {
+        background-color: #aa8866;
+      }
+      .locked {
+        background-color: #000000;
+      }
+      .inside {
+        padding: 10px;
+      }
+    </style>
+  </head>
+  <body onload="htmlSet(false)" oncontextmenu="return false;">
+    <!-- disabling of context menu (makes clicking cookie easier) by https://stackoverflow.com/questions/381795/how-to-disable-right-click-context-menu-in-javascript -->
+    <div class="container bottom">
+      <div class="row">
+        <div id="cook" class="col-sm-4">
+          <br>
+          <span id="totalDisplay">0</span> Cookies<!-- Displays cookies and CPS --><br>
+          Cookies Per Second: <span id="CPSDisplay">0.0</span><!-- Displays cookies and CPS --><br><br><br>
+          <img src="chocolate chip.png" alt="Cookie for Clicking" width="341px" id="cookie" onclick="clickCookie()">
+          <!-- Cookie upgrade in first column may look better -->
+          <div class="buyB inside" id="cookieUpgrade" onclick="cookieUpgrade()">Current Cookie: <span id="current"></span><br><span id="noUpgrade"><br>Upgrade Cookie to <br><span id="cosmCook"><span id="cosmeticCookie"></span> Cookie</span></span><br>Level <span id="cookieLvl"></span><span id="noCost"><br>Cost: <span id="cookieUpg"></span> Cookies</span></div>
+        </div>
+        <div id="buildings" class="col-sm-4">
+          <div class="buyB" onclick="buy(0)"><div class="inside" id="autoPurchase">Buy Autoclicker<br>Cost: <span id="autoCost"></span> Cookies<br><span id="autoCPS"></span> Cookies Per Second<br>You have: <span id="autoAmt"></span></div></div>
+          <div class="buyB" onclick="buy(1)"><div class="inside" id="granPurchase">Buy Granny<br>Cost: <span id="granCost"></span> Cookies<br><span id="granCPS"></span> Cookies Per Second<br>You have: <span id="granAmt"></span></div></div>
+          <div class="buyB" onclick="buy(2)"><div class="inside" id="farmPurchase">Buy Farm<br>Cost: <span id="farmCost"></span> Cookies<br><span id="farmCPS"></span> Cookies Per Second<br>You have: <span id="farmAmt"></span></div></div>
+          <div class="buyB" onclick="buy(3)"><div class="inside" id="minePurchase">Buy Mine<br>Cost: <span id="mineCost"></span> Cookies<br><span id="mineCPS"></span> Cookies Per Second<br>You have: <span id="mineAmt"></span></div></div>
+          <div class="buyB" onclick="buy(4)"><div class="inside" id="factPurchase">Buy Factory<br>Cost: <span id="factCost"></span> Cookies<br><span id="factCPS"></span> Cookies Per Second<br>You have: <span id="factAmt"></span></div></div>
+          <div class="buyB" onclick="buy(5)"><div class="inside" id="bankPurchase">Buy Bank<br>Cost: <span id="bankCost"></span> Cookies<br><span id="bankCPS"></span> Cookies Per Second<br>You have: <span id="bankAmt"></span></div></div>
+          <div class="buyB" onclick="buy(6)"><div class="inside" id="tempPurchase">Buy Temple<br>Cost: <span id="tempCost"></span> Cookies<br><span id="tempCPS"></span> Cookies Per Second<br>You have: <span id="tempAmt"></span></div></div>
+          <div class="buyB" onclick="buy(7)"><div class="inside" id="wizaPurchase">Buy Wizard Tower<br>Cost: <span id="wizaCost"></span> Cookies<br><span id="wizaCPS"></span> Cookies Per Second<br>You have: <span id="wizaAmt"></span></div></div>
+          <div class="buyB" onclick="buy(8)"><div class="inside" id="shipPurchase">Buy Shipment<br>Cost: <span id="shipCost"></span> Cookies<br><span id="shipCPS"></span> Cookies Per Second<br>You have: <span id="shipAmt"></span></div></div>
+          <div class="buyB" onclick="buy(9)"><div class="inside" id="alchPurchase">Buy Alchemy Station<br>Cost: <span id="alchCost"></span> Cookies<br><span id="alchCPS"></span> Cookies Per Second<br>You have: <span id="alchAmt"></span></div></div>
+          <div class="buyB" onclick="buy(10)"><div class="inside" id="portPurchase">Buy Portal<br>Cost: <span id="portCost"></span> Cookies<br><span id="portCPS"></span> Cookies Per Second<br>You have: <span id="portAmt"></span></div></div>
+        </div>
+        <div id="upgrades" class="col-sm-4">
+          <div class="buyB" onclick="upgrade(0)"><div class="inside" id="autoUpgrade">Upgrade Clickers<br>Cost: <span id="autoUpg"></span> Cookies<br>Level <span id="autoLvl"></span></div></div>
+          <div class="buyB" onclick="upgrade(1)"><div class="inside" id="granUpgrade">Upgrade Granny<br>Cost: <span id="granUpg"></span> Cookies<br>Level <span id="granLvl"></span></div></div>
+          <div class="buyB" onclick="upgrade(2)"><div class="inside" id="farmUpgrade">Upgrade Farm<br>Cost: <span id="farmUpg"></span> Cookies<br>Level <span id="farmLvl"></span></div></div>
+          <div class="buyB" onclick="upgrade(3)"><div class="inside" id="mineUpgrade">Upgrade Mine<br>Cost: <span id="mineUpg"></span> Cookies<br>Level <span id="mineLvl"></span></div></div>
+          <div class="buyB" onclick="upgrade(4)"><div class="inside" id="factUpgrade">Upgrade Factory<br>Cost: <span id="factUpg"></span> Cookies<br>Level <span id="factLvl"></span></div></div>
+          <div class="buyB" onclick="upgrade(5)"><div class="inside" id="bankUpgrade">Upgrade Bank<br>Cost: <span id="bankUpg"></span> Cookies<br>Level <span id="bankLvl"></span></div></div>
+          <div class="buyB" onclick="upgrade(6)"><div class="inside" id="tempUpgrade">Upgrade Temple<br>Cost: <span id="tempUpg"></span> Cookies<br>Level <span id="tempLvl"></span></div></div>
+          <div class="buyB" onclick="upgrade(7)"><div class="inside" id="wizaUpgrade">Upgrade Wizard Tower<br>Cost: <span id="wizaUpg"></span> Cookies<br>Level <span id="wizaLvl"></span></div></div>
+          <div class="buyB" onclick="upgrade(8)"><div class="inside" id="shipUpgrade">Upgrade Shipment<br>Cost: <span id="shipUpg"></span> Cookies<br>Level <span id="shipLvl"></span></div></div>
+          <div class="buyB" onclick="upgrade(9)"><div class="inside" id="alchUpgrade">Upgrade Alchemy Station<br>Cost: <span id="alchUpg"></span> Cookies<br>Level <span id="alchLvl"></span></div></div>
+          <div class="buyB" onclick="upgrade(10)"><div class="inside" id="portUpgrade">Upgrade Portal<br>Cost: <span id="portUpg"></span> Cookies<br>Level <span id="portLvl"></span></div></div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
